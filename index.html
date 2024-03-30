@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="chatApp">
+<head>
+    <title>AngularJS Chat</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+  <link rel="stylesheet" href="style.css">
+</head>
+<body ng-init="chat.userName='', chat.messages=[]">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Chat</a>
+    </nav>
+
+    <div class="container" ng-controller="ChatController as chat">
+        <div>
+            <div class="card chat-panel mb-3">
+                <div class="chat-window">
+                <div ng-repeat="message in chat.messages track by $index" class="message"
+                     id="{key}"
+                     ng-class="{ 'my-message': message.sender === chat.userName, 'other-message': message.sender !== chat.userName }">
+                        <div class="messages" ref="msgBox">
+                            <div class="single" v-for="message in formattedMessages" :key="message.id">
+                                <div class="name">{{ message.sender === chat.userName ? 'You' : message.sender }}</div>
+                                <span class="created-at">{{message.time}}</span>
+                                <span class="message">{{ message.text }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer">
+            <form ng-submit="chat.sendMessage()">
+                <div class="input-group">
+                    <input type="text" class="form-control" ng-model="chat.message" placeholder="Type your message" required />
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">Send</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
